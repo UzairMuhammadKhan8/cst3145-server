@@ -1,0 +1,14 @@
+{
+   "name": "projects",
+   "author": "uzair",
+   "private": true,
+   "version": "0.2.0",
+   "dependencies": {
+      "express": "^4.17.1",
+      "loadash": "^1.0.0",
+      "lodash": "^4.17.21",
+      "mongodb": "^3.6.6",
+      "mustache": "^4.2.0",
+      "static": "^2.0.0"
+   }
+}
