@@ -1,8 +1,9 @@
 {
-   "name": "projects",
-   "author": "uzair",
+   "name": "project",
+   "author": "uzair",   
    "private": true,
    "version": "0.2.0",
+   "main": "server.js",
    "dependencies": {
       "express": "^4.17.1",
       "loadash": "^1.0.0",
