@@ -86,9 +86,9 @@
                     <ul>
                    <p>
                             <strong>First Name:</strong>
-                            <input id="firstName" required v-model.trim="order.name" type="text" />
+                            <input id="Name" required v-model.trim="order.name" type="text" />
                         </p>
-                        <p><strong>Phone : </strong><input id="phone" required v-model.number='order.phone'
+                        <p><strong>Phone : </strong><input id="phone" required v-model.number='phone.phone'
                                 type="number"></p>
 
 
@@ -121,7 +121,7 @@
                 showproduct: true,
 
                 order: {
-                    name: " ",
+                    name: "",
                     phone: null
 
                 },
@@ -208,7 +208,7 @@
                         headers: {
                             'Content-Type': 'application/json',
                         },
-                        body: JSON.stringify({ Name: this.order.name, Phone: this.order.phone, ProductsInOrder: this.shopcart.map(({ title }) => title) })
+                        body: JSON.stringify({Name: this.order.name, Phone: this.order.phone, ProductsInOrder: this.shopcart.map(({ title }) => title) })
                     })
                         .then(function (data) {
                             console.log(data);
