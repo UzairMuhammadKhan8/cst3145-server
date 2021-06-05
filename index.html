@@ -120,7 +120,8 @@
                 showproduct: true,
 
                 order: {
-                    name: " ",
+                    firstName: " ",
+                    
                     phone: null
 
                 },
@@ -261,7 +262,35 @@
          
 
           
-    }
+    },
+         submitForm(l, b, c) {
+                    if (this.order.firstName == "" && this.order.lastName == "" && this.order.phone == "") {
+
+                        return alert('PLEASE ENTER YOUR DETAILS FOR ORDERS')
+
+                    }
+                    if (this.order.firstName == "") {
+                        return alert('PLEASE ENTER YOUR NAME')
+                    }
+                    if (this.order.lastName == "") {
+                        return alert('PLEASE ENTER YOU LASTNAME')
+                    }
+                    if (this.order.phone == "") {
+                        return alert('PLEASE ENTER YOUR MOBILE NUM OR PHONE', { background: 'black' });
+                    }
+                    else {
+
+
+                        this.order.firstName = "";
+                        this.order.lastName = "";
+                        this.order.phone = "";
+
+                        return alert(' you are succesfully placed the order')
+
+
+                    }
+
+                },
 
             
         });
