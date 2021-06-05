@@ -78,17 +78,16 @@
 
                 <form @submit="submitForm">
                     <ul>
-                     <!--    <li> <label for="Name">Name:</label> </li>
-                       
-                        <li> <input type="text" id="Name"  v-model.trim="order.name" name="Name" required></li>
-                        <li> <label for="phone">Phone:</label> </li>
-                        <li> <input type="tel" id="phone" v-model.number="order.phone" placeholder="e.g 00974 12345678" name="phone" required> </li> -->
-                        <p>
-                            <strong>First Name:</strong>
-                            <input id="firstName" required v-model.trim="order.name" type="text" />
-                         </p>
-                         <p><strong>Phone : </strong><input id="phone" required v-model.number='order.phone' type="number"></p>
                     
+                        <li> <strong>First Name:</strong>
+                            <input id="firstName" required v-model.trim="order.name" type="text" />
+                        </li>
+                        <li> <strong>Last Name:</strong>
+                            <input id="firstName" required v-model.trim="order.name" type="text" />
+                        </li>
+                        <li>
+                         <p><strong>Phone : </strong><input id="phone" required v-model.number='order.phone' type="number"></p>
+                        </li>
                     
                     </ul>
                     <input type="submit">
@@ -154,10 +153,8 @@
         addtocart: function(product) {
             this.cart.push(product);
             console.log(product);
-            this.cartID.push (product.id)
-            console.log(product.availableInventory)
-            console.log(this.cartCount(product.id));
-           
+            this.cartID.push (product.id);
+            
 
            
 
