@@ -34,12 +34,12 @@
 <body>
     <div id="app">
 
-        <!-- shoping cart -->
+        <!-- shoping shopcart -->
         <header>
             <h1>{{sitename}}</h1>
-            <button v-on:click="showcheckout" v-if="enableshoppingcart">shopping cart</button>
-            <P v-else>shopping cart empty</P>
-            <div v-for="product in cart" style="display:inline-block;">
+            <button v-on:click="buttonshowcheckout" v-if="enableshoppingcart">shopping shopcart</button>
+            <P v-else>shopping shopcart empty</P>
+            <div v-for="product in shopcart" style="display:inline-block;">
                 <figure>
                     <img v-bind:src="product.image" width="200" height="200">
                 </figure>
@@ -71,7 +71,7 @@
                     <P>Product I.d: {{product.id}}</P>
                     <P>Number of spaces: {{product.availableInventory}}</P>
                     <button v-on:click="decrement_inventory(product); addtocart(product); " v-if="isenable(product)">
-                        Add to cart</button>
+                        Add to shopcart</button>
                     <!-- only show the button when 'canAddToCart' is true when it becomes false the button disappers -->
 
                     <button disabled="disabled" v-else>stock empty</button>
@@ -84,12 +84,7 @@
 
                 <form @submit="submitForm">
                     <ul>
-                        <!--    <li> <label for="Name">Name:</label> </li>
-                       
-                        <li> <input type="text" id="Name"  v-model.trim="order.name" name="Name" required></li>
-                        <li> <label for="phone">Phone:</label> </li>
-                        <li> <input type="tel" id="phone" v-model.number="order.phone" placeholder="e.g 00974 12345678" name="phone" required> </li> -->
-                        <p>
+                   <p>
                             <strong>First Name:</strong>
                             <input id="firstName" required v-model.trim="order.name" type="text" />
                         </p>
@@ -121,9 +116,8 @@
                 sitename: "BOOKS BUY NOW!",
                 products: [],
 
-                lessons: [],
-                cart: [],
-                cartID: [],
+       
+                shopcart: [],
                 showproduct: true,
 
                 order: {
@@ -132,7 +126,7 @@
 
                 },
 
-                Orderinfo: []
+            
 
 
 
@@ -156,13 +150,12 @@
 
 
 
-
+                    //just pushsing the product
                 addtocart: function (product) {
-                    this.cart.push(product);
-                    console.log(product);
-                    this.cartID.push(product.id)
-                    console.log(product.availableInventory)
-                    console.log(this.cartCount(product.id));
+                    this.shopcart.push(product);
+                    
+                   
+                   
 
 
 
@@ -173,29 +166,30 @@
 
 
 
-                    // console.log("iM HERE");
+                
 
-                    fetch('https://cst--3145.herokuapp.com/collection/products/' + product._id, {
-                        method: 'PUT',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({ availableInventory: newavailableInventory })
-                    }).then(function (data) {
-                        console.log(data);
-                        //              console.log("Im Here");
+                    // fetch('https://cst--3145.herokuapp.com/collection/products/' + product._id, {
+                    //     method: 'PUT',
+                    //     headers: {
+                    //         'Content-Type': 'application/json',
+                    //     },
+                    //     body: JSON.stringify({ availableInventory: newavailableInventory })
+                    // }).then(function (data) {
+                 
+                 
 
-                    });
+                    // });
 
 
                 },
-                showcheckout() {
+                //its the products on the top.
+                buttonshowcheckout() {
                     this.showproduct = this.showproduct ? false : true;
                 },
                 removefromcart: function (product) {
                     product.availableInventory = product.availableInventory + 1;
                     const newavail = product.availableInventory;
-                    this.cart.pop(product)
+                    this.shopcart.pop(product)
 
 
 
@@ -214,13 +208,13 @@
                         headers: {
                             'Content-Type': 'application/json',
                         },
-                        body: JSON.stringify({ Name: this.order.name, Phone: this.order.phone, ProductsInOrder: this.cart.map(({ title }) => title) })
+                        body: JSON.stringify({ Name: this.order.name, Phone: this.order.phone, ProductsInOrder: this.shopcart.map(({ title }) => title) })
                     })
                         .then(function (data) {
                             console.log(data);
 
                         });
-                    this.cart.forEach(element => {
+                    this.shopcart.forEach(element => {
                         fetch('https://cw2indi.herokuapp.com/collection/lessons/' + element._id, {
                             method: 'PUT',
                             headers: {
@@ -245,10 +239,11 @@
 
                 },
 
-
+                    // when click the button it will show the checkout button
+                    //computed for use i dont want any parameters .
                 computed: {
                     enableshoppingcart: function () {
-                        if (this.cart.length > 0) {
+                        if (this.shopcart.length > 0) {
                             return true
                         }
                         else {
