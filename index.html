@@ -84,14 +84,15 @@
 
                 <form @submit="submitForm">
                     <ul>
-                           <p>
-                               <strong>Name:</strong>
-                               <input id="name" required v-model.trim="order.name" type="text" />
-                            </p>
-                            <p><strong>Phone : </strong><input id="phone" required v-model.number='order.phone' type="number"></p>
-                       
-                       
-                    <input type="submit">
+                        <p>
+                            <strong>Name:</strong>
+                            <input id="name" required v-model.trim="order.name" type="text" />
+                        </p>
+                        <p><strong>Phone : </strong><input id="phone" required v-model.number='order.phone'
+                                type="number"></p>
+
+
+                        <input type="submit">
                 </form>
 
 
@@ -125,7 +126,7 @@
 
                 },
 
-             
+
 
 
 
@@ -215,28 +216,26 @@
                         headers: {
                             'Content-Type': 'application/json',
                         },
-                        body: JSON.stringify({ Name: this.order.name, Phone: this.order.phone, ProductsInOrder: this.cart.map(({ product }) => subject) })
-                    })
-                        .then(function () {
+                        body: JSON.stringify({ Name: this.order.name, Phone: this.order.phone, ProductsInOrder: this.cart.map(({ title }) => title) })}).then(function () {
 
+
+                    });
+
+                    this.cart.forEach(element => {
+
+                        fetch('https://cw2indi.herokuapp.com/collection/lessons/' + element._id, {
+                            method: 'PUT',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({ availableInventory: element.availableInventory })
+                        }).then(function (data) {
+                            console.log(data);
+                            console.log("Im Here");
 
                         });
 
-                        this.cart.forEach(element => {
-                
-                fetch ('https://cw2indi.herokuapp.com/collection/lessons/'+ element._id,{
-                  method: 'PUT',
-                  headers:{
-                     'Content-Type': 'application/json',
-                  },
-                   body: JSON.stringify({availableInventory: element.availableInventory })
-                  }).then(function (data) {
-                     console.log(data);
-                     console.log("Im Here");
-
-             });
-                
-               });
+                    });
 
 
                     alert('Confirmed Order!')
