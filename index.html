@@ -16,7 +16,7 @@
             <h1>{{sitename}}</h1>
             <button v-on:click="showcheckout" v-if="enableshoppingcart">shopping cart</button>
             <P v-else>shopping cart empty</P>
-            <div v-for="product in cart">
+            <div v-for="product in cart" style="display:flex;">
                 <figure>
                     <img v-bind:src="product.image" width="200" height="200">
                 </figure>
@@ -30,7 +30,7 @@
         </header>
 
         <main>
-            <div v-if="showproduct" style="display: inline-flex;">
+            <div v-if="showproduct" >
       
 
 
@@ -143,15 +143,11 @@
            
 
 
-           const newSpace = product.availableInventory;
+           const newavailableInventory = product.availableInventory;
 
          
            
-            console.log("iM HERE");
-
-            console.log(product._id);
-            console.log(newSpace);
-
+           
             console.log("iM HERE");
 
             fetch ('https://cst--3145.herokuapp.com/collection/products/'+ product._id,{
@@ -159,7 +155,7 @@
                   headers:{
                      'Content-Type': 'application/json',
                   },
-                   body: JSON.stringify({availableInventory: newSpace })
+                   body: JSON.stringify({availableInventory: newavailableInventory })
                   }).then(function (data) {
                      console.log(data);
        //              console.log("Im Here");
@@ -172,8 +168,14 @@
             this.showproduct = this.showproduct ? false : true;
         },
         removefromcart: function(product) {
+           
+
             this.cart.pop(product)
+
+            window.location.reload();
         },
+
+        
         // sortbyprice(prices){
         //     function compare(a, b) {
         //         if (a.price > b.price)
