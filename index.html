@@ -79,16 +79,13 @@
                 <form @submit="submitForm">
                     <ul>
                     
-                        <li> <strong>First Name:</strong>
+                         <span>   <strong>First Name:</strong></p>
                             <input id="firstName" required v-model.trim="order.name" type="text" />
-                        </li>
-                        <li> <strong>Last Name:</strong>
-                            <input id="firstName" required v-model.trim="order.name" type="text" />
-                        </li>
-                        <li>
+                        </span>
+                        <span>                 
                          <p><strong>Phone : </strong><input id="phone" required v-model.number='order.phone' type="number"></p>
-                        </li>
                     
+                        </span>
                     </ul>
                     <input type="submit">
                 </form>
@@ -119,9 +116,8 @@
                 showproduct: true,
 
                 order: {
-                    firstName: " ",
-                    lastName:"",
-                    phone:"" 
+                    name: " ",
+                    phone: null
 
                 },
 
@@ -153,8 +149,10 @@
         addtocart: function(product) {
             this.cart.push(product);
             console.log(product);
-            this.cartID.push (product.id);
-            
+            this.cartID.push (product.id)
+            console.log(product.availableInventory)
+            console.log(this.cartCount(product.id));
+           
 
            
 
@@ -212,7 +210,7 @@
                headers:{
                   'Content-Type': 'application/json',
                },
-               body: JSON.stringify({Name: this.order.name, Phone: this.order.phone, ProductsInOrder: this.cart.map(({title}) => title) })
+               body: JSON.stringify({Name: this.firstName, lastName: this.lastName, phone: this.phone, ProductsInOrder: this.cart.map(({title}) => title) })
                })
                .then(function (data) {
                   console.log(data);
@@ -260,34 +258,6 @@
 
           
     },
-         submitForm(l, b, c) {
-                    if (this.order.firstName == "" && this.order.lastName == "" && this.order.phone == "") {
-
-                        return alert('PLEASE ENTER YOUR DETAILS FOR ORDERS')
-
-                    }
-                    if (this.order.firstName == "") {
-                        return alert('PLEASE ENTER YOUR NAME')
-                    }
-                    if (this.order.lastName == "") {
-                        return alert('PLEASE ENTER YOU LASTNAME')
-                    }
-                    if (this.order.phone == "") {
-                        return alert('PLEASE ENTER YOUR MOBILE NUM OR PHONE', { background: 'black' });
-                    }
-                    else {
-
-
-                        this.order.firstName = "";
-                        this.order.lastName = "";
-                        this.order.phone = "";
-
-                        return alert(' you are succesfully placed the order')
-
-
-                    }
-
-                },
 
             
         });
