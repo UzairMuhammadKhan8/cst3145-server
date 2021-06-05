@@ -87,7 +87,7 @@
 
                         <span>
                             <p><strong>First Name:</strong>
-                                <input id="firstName" required v-model.trim="order.name" type="text" />
+                                <input id="firstName" required v-model.trim="order.firstName" type="text" />
                             </p>
                         </span>
                         <span>
@@ -97,7 +97,7 @@
                         </span>
 
                         <span>
-                            <p><strong>Phone: </strong><input id="" required v-model.phone='order.lastName'
+                            <p><strong>Phone: </strong><input id="" required v-model.phone='order.phone'
                                     type="number"></p>
 
                         </span>
@@ -131,7 +131,8 @@
                 showproduct: true,
 
                 order: {
-                    name: " ",
+                    firstName:"",
+                    lastName: " ",
                     phone: null
 
                 },
