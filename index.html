@@ -196,17 +196,7 @@
                     product.availableInventory = product.availableInventory + 1;
                     const newavail = product.availableInventory;
                     this.cart.pop(product)
-                    fetch('https://cst--3145.herokuapp.com/collection/products/' + product._id, {
-                        method: 'PUT',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({ availableInventory: newavail })
-                    }).then(function (data) {
-                        console.log(data);
-                        //              console.log("Im Here");
 
-                    });
 
 
                 },
@@ -218,6 +208,18 @@
                 submitForm() {
 
 
+
+                    fetch('https://cst--3145.herokuapp.com/collection/orders', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ Name: this.order.name, Phone: this.order.phone, ProductsInOrder: this.cart.map(({ title }) => title) })
+                    })
+                        .then(function (data) {
+                            console.log(data);
+
+                        });
                     this.cart.forEach(element => {
                         fetch('https://cw2indi.herokuapp.com/collection/lessons/' + element._id, {
                             method: 'PUT',
@@ -230,66 +232,50 @@
                             console.log("Im Here");
 
                         });
-
-
-
-
-                        fetch('https://cst--3145.herokuapp.com/collection/orders', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                            },
-                            body: JSON.stringify({ Name: this.order.name, Phone: this.order.phone, ProductsInOrder: this.cart.map(({ title }) => title) })
-                        })
-                            .then(function (data) {
-                                console.log(data);
-
-                            });
-                        alert('Order submitted not 123 cool!')
-                    },
-
-                        cartCount(id){
-                            let count = 0;
-                            for(let i = 0; i< this.cartID.length; i++){
-                        if (this.cartID[i] === id) {
-                            count++
-                        }
-                    }
-                    return count;
-                },
-
-            },
-
-            computed: {
-                enableshoppingcart: function () {
-                    if (this.cart.length > 0) {
-                        return true
-                    }
-                    else {
-                        return false
-                    }
-                },
-
-
-            },
-
-            created: function () {
-
-                fetch('https://cst--3145.herokuapp.com/collection/products').then(
-                    function (response) {
-                        response.json().then(
-                            function (json) {
-                                webstore.products = json;
-                                console.log(webstore.products)
-                            });
                     });
 
+                        alert('Confirmed Order!')
 
 
-            }
 
 
-        });
+                    },
+
+            
+
+                },
+
+
+                computed: {
+                    enableshoppingcart: function () {
+                        if (this.cart.length > 0) {
+                            return true
+                        }
+                        else {
+                            return false
+                        }
+                    },
+
+
+                },
+
+                created: function () {
+
+                    fetch('https://cst--3145.herokuapp.com/collection/products').then(
+                        function (response) {
+                            response.json().then(
+                                function (json) {
+                                    webstore.products = json;
+                                    console.log(webstore.products)
+                                });
+                        });
+
+
+
+                }
+
+
+            });
 
     </script>
 
