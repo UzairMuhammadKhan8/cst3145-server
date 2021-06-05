@@ -7,21 +7,28 @@
     <script src="subjects.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
 
-<style>
-    img
-    {
-        object-fit: cover;
-    }
-    div#app{
-        font-weight: bold;
-        font-style: italic;
-        font-family: sans-serif;
-    font-size: 16px;
-        border:none;
- color: rgb(5, 22, 14);
-    }
-    div {border: 1px rgb(4, 167, 99) solid;border-radius:black;  padding: 20px;margin: 20px;text-align: center; }
-</style>
+    <style>
+        img {
+            object-fit: cover;
+        }
+
+        div#app {
+            font-weight: bold;
+            font-style: italic;
+            font-family: sans-serif;
+            font-size: 16px;
+            border: none;
+            color: rgb(5, 22, 14);
+        }
+
+        div {
+            border: 1px rgb(4, 167, 99) solid;
+            border-radius: black;
+            padding: 20px;
+            margin: 20px;
+            text-align: center;
+        }
+    </style>
 </head>
 
 <body>
@@ -46,8 +53,8 @@
         </header>
 
         <main>
-            <div v-if="showproduct" >
-      
+            <div v-if="showproduct">
+
 
 
 
@@ -56,7 +63,7 @@
                     <figure>
                         <img v-bind:src="product.image" width="200" height="200">
                     </figure>
-                   
+
                     <h2 v-html="product.subject"></h2>
                     <p>ID : {{ product._id}}</p>
                     <P>Location: {{product.location}}</P>
@@ -67,7 +74,7 @@
                         Add to cart</button>
                     <!-- only show the button when 'canAddToCart' is true when it becomes false the button disappers -->
 
-                    <button disabled="disabled" v-else>stock empty</button>
+                    <button disabled="disabled" v-else>DISABLE</button>
                 </div>
             </div>
 
@@ -77,19 +84,13 @@
 
                 <form @submit="submitForm">
                     <ul>
-                     <!--    <li> <label for="Name">Name:</label> </li>
+                           <p>
+                               <strong>Name:</strong>
+                               <input id="name" required v-model.trim="order.name" type="text" />
+                            </p>
+                            <p><strong>Phone : </strong><input id="phone" required v-model.number='order.phone' type="number"></p>
                        
-                        <li> <input type="text" id="Name"  v-model.trim="order.name" name="Name" required></li>
-                        <li> <label for="phone">Phone:</label> </li>
-                        <li> <input type="tel" id="phone" v-model.number="order.phone" placeholder="e.g 00974 12345678" name="phone" required> </li> -->
-                        <p>
-                            <strong>First Name:</strong>
-                            <input id="firstName" required v-model.trim="order.name" type="text" />
-                         </p>
-                         <p><strong>Phone : </strong><input id="phone" required v-model.number='order.phone' type="number"></p>
-                    
-                    
-                    </ul>
+                       
                     <input type="submit">
                 </form>
 
@@ -119,12 +120,12 @@
                 showproduct: true,
 
                 order: {
-                    name: " ",
+                    name: "",
                     phone: null
 
                 },
 
-                Orderinfo: []
+             
 
 
 
@@ -143,127 +144,145 @@
                 },
 
 
+
+
+
+
+
+
+                addtocart: function (product) {
+                    this.cart.push(product);
+                    console.log(product);
+                    this.cartID.push(product.id)
+                    console.log(product.availableInventory)
+                    console.log(this.cartCount(product.id));
+
+
+
+
+
+                    const newavailableInventory = product.availableInventory;
+
+
+
+
+                    console.log("iM HERE");
+
+                    fetch('https://cst--3145.herokuapp.com/collection/products/' + product._id, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ availableInventory: newavailableInventory })
+                    }).then(function (data) {
+                        console.log(data);
+                        //              console.log("Im Here");
+
+                    });
+
+
+                },
+                showcheckout() {
+                    this.showproduct = this.showproduct ? false : true;
+                },
+                removefromcart: function (product) {
+
+                    product.availableInventory = product.availableInventory + 1;
+                    const newavail = product.availableInventory;
+                    this.cart.pop(product)
+                    fetch('https://cst--3145.herokuapp.com/collection/products/' + product._id, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ availableInventory: newavail })
+                    }).then(function (data) {
+                        console.log(data);
+                        //              console.log("Im Here");
+
+                    });
+
+
+                },
+
+
+
+
+
+                submitForm() {
+                    fetch('https://cst--3145.herokuapp.com/collection/orders', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ Name: this.order.name, Phone: this.order.phone, ProductsInOrder: this.cart.map(({ product }) => subject) })
+                    })
+                        .then(function () {
+
+
+                        });
+
+                        this.cart.forEach(element => {
                 
-              
-
-
-
-
-        addtocart: function(product) {
-            this.cart.push(product);
-            console.log(product);
-            this.cartID.push (product.id)
-            console.log(product.availableInventory)
-            console.log(this.cartCount(product.id));
-           
-
-           
-
-
-           const newavailableInventory = product.availableInventory;
-
-         
-           
-           
-            console.log("iM HERE");
-
-            fetch ('https://cst--3145.herokuapp.com/collection/products/'+ product._id,{
+                fetch ('https://cw2indi.herokuapp.com/collection/lessons/'+ element._id,{
                   method: 'PUT',
                   headers:{
                      'Content-Type': 'application/json',
                   },
-                   body: JSON.stringify({availableInventory: newavailableInventory })
+                   body: JSON.stringify({availableInventory: element.availableInventory })
                   }).then(function (data) {
                      console.log(data);
-       //              console.log("Im Here");
+                     console.log("Im Here");
 
-             }); 
-                     
-                     
-        },
-        showcheckout(){
-            this.showproduct = this.showproduct ? false : true;
-        },
-        removefromcart: function(product) {
-
-            product.availableInventory = product.availableInventory +1;
-            const newavail = product.availableInventory;
-            this.cart.pop(product)
-            fetch ('https://cst--3145.herokuapp.com/collection/products/'+ product._id,{
-                  method: 'PUT',
-                  headers:{
-                     'Content-Type': 'application/json',
-                  },
-                   body: JSON.stringify({availableInventory: newavail })
-                  }).then(function (data) {
-                     console.log(data);
-       //              console.log("Im Here");
-
-             }); 
-
-               
-        },
-
-       
-
-      
-
-        submitForm() {
-            fetch ('https://cst--3145.herokuapp.com/collection/orders',{
-               method: 'POST',
-               headers:{
-                  'Content-Type': 'application/json',
-               },
-               body: JSON.stringify({Name: this.order.name, Phone: this.order.phone, ProductsInOrder: this.cart.map(({product}) => subject) })
-               })
-               .then(function () {
-        
-                  
+             });
+                
                });
-            alert('Confirmed Order!')
-        },
 
-        cartCount(id){
-                  let count = 0;
-                  for (let i = 0; i < this.cartID.length; i++){
-                      if(this.cartID[i] === id){
-                          count++
-                      }
-                  }
-                  return count;
-              },
-                
+
+                    alert('Confirmed Order!')
+                },
+
+                cartCount(id) {
+                    let count = 0;
+                    for (let i = 0; i < this.cartID.length; i++) {
+                        if (this.cartID[i] === id) {
+                            count++
+                        }
+                    }
+                    return count;
+                },
+
             },
 
-        computed: {
-            enableshoppingcart: function() {
-                if (this.cart.length > 0) {
-                    return true
-                }
-                else {
-                    return false
-                }
+            computed: {
+                enableshoppingcart: function () {
+                    if (this.cart.length > 0) {
+                        return true
+                    }
+                    else {
+                        return false
+                    }
+                },
+
+
             },
-        
-          
-        },
 
-        created: function() {
-             
-             fetch('https://cst--3145.herokuapp.com/collection/products').then(
-              function (response) {
-                  response.json().then(
-                      function (json) {
-                        webstore.products = json;
-                      console.log(webstore.products)
-                  });
-          });
-         
+            created: function () {
 
-          
-    }
+                fetch('https://cst--3145.herokuapp.com/collection/products').then(
+                    function (response) {
+                        response.json().then(
+                            function (json) {
+                                webstore.products = json;
+                                console.log(webstore.products)
+                            });
+                    });
 
-            
+
+
+            }
+
+
         });
 
     </script>
