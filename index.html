@@ -144,7 +144,7 @@
 
 
                 
-
+              
 
 
 
@@ -214,10 +214,10 @@
                headers:{
                   'Content-Type': 'application/json',
                },
-               body: JSON.stringify({Name: this.order.name, Phone: this.order.phone, ProductsInOrder: this.cart.map(({title}) => title) })
+               body: JSON.stringify({Name: this.order.name, Phone: this.order.phone, ProductsInOrder: this.cart.map(({product}) => subject) })
                })
-               .then(function (data) {
-                  console.log(data);
+               .then(function () {
+        
                   
                });
             alert('Confirmed Order!')
