@@ -74,7 +74,7 @@
                         Add to cart</button>
                     <!-- only show the button when 'canAddToCart' is true when it becomes false the button disappers -->
 
-                    <button style="width:56px; height:140px;" disabled="disabled" v-else>stock empty</button>
+                    <button disabled="disabled" v-else>stock empty</button>
                 </div>
             </div>
 
@@ -84,23 +84,19 @@
 
                 <form @submit="submitForm">
                     <ul>
+                        <!--    <li> <label for="Name">Name:</label> </li>
+                       
+                        <li> <input type="text" id="Name"  v-model.trim="order.name" name="Name" required></li>
+                        <li> <label for="phone">Phone:</label> </li>
+                        <li> <input type="tel" id="phone" v-model.number="order.phone" placeholder="e.g 00974 12345678" name="phone" required> </li> -->
+                        <p>
+                            <strong>First Name:</strong>
+                            <input id="firstName" required v-model.trim="order.name" type="text" />
+                        </p>
+                        <p><strong>Phone : </strong><input id="phone" required v-model.number='order.phone'
+                                type="number"></p>
 
-                        <span>
-                            <p><strong>First Name:</strong>
-                                <input id="firstName" required v-model.trim="order.firstName" type="text" />
-                            </p>
-                        </span>
-                        <span>
-                            <p><strong>Last Name: </strong><input id="lastName" required v-model.trim='order.lastName'
-                                    type="text"></p>
 
-                        </span>
-
-                        <span>
-                            <p><strong>Phone: </strong><input id="" required v-model.phone='order.phone'
-                                    type="number"></p>
-
-                        </span>
                     </ul>
                     <input type="submit">
                 </form>
@@ -131,8 +127,7 @@
                 showproduct: true,
 
                 order: {
-                    firstName:"",
-                    lastName: " ",
+                    name: " ",
                     phone: null
 
                 },
@@ -178,7 +173,7 @@
 
 
 
-                    console.log("iM HERE");
+                    // console.log("iM HERE");
 
                     fetch('https://cst--3145.herokuapp.com/collection/products/' + product._id, {
                         method: 'PUT',
@@ -221,23 +216,41 @@
 
 
                 submitForm() {
-                    fetch('https://cst--3145.herokuapp.com/collection/orders', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({ Name: this.firstName, lastName: this.lastName, phone: this.phone, ProductsInOrder: this.cart.map(({ title }) => title) })
-                    })
-                        .then(function (data) {
+
+
+                    this.cart.forEach(element => {
+                        fetch('https://cw2indi.herokuapp.com/collection/lessons/' + element._id, {
+                            method: 'PUT',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({ availableInventory: element.availableInventory })
+                        }).then(function (data) {
                             console.log(data);
+                            console.log("Im Here");
 
                         });
-                    alert('Order submitted not 123 cool!')
-                },
 
-                cartCount(id) {
-                    let count = 0;
-                    for (let i = 0; i < this.cartID.length; i++) {
+
+
+
+                        fetch('https://cst--3145.herokuapp.com/collection/orders', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({ Name: this.order.name, Phone: this.order.phone, ProductsInOrder: this.cart.map(({ title }) => title) })
+                        })
+                            .then(function (data) {
+                                console.log(data);
+
+                            });
+                        alert('Order submitted not 123 cool!')
+                    },
+
+                        cartCount(id){
+                            let count = 0;
+                            for(let i = 0; i< this.cartID.length; i++){
                         if (this.cartID[i] === id) {
                             count++
                         }
@@ -273,7 +286,7 @@
 
 
 
-            },
+            }
 
 
         });
