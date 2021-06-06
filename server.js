@@ -19,6 +19,8 @@ MongoClient.connect("mongodb+srv://uzair:saceblack123@@cluster0.lecbo.mongodb.ne
     db = client.db('webstore')
 })
 
+app.use(express.static('public'))
+
 app.get("/", (req, res, next) => {
     res.send("select a collection, e.g , /collection/messages")
 })
