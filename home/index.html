@@ -8,8 +8,18 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
 
     <style>
+  
+        p   { font-family: cursive;
+            color: red;
+            /* height: 23px; */
+        /* width: 599px; */
+        }
         img {
+
+            width: 250px;
+    height: 319px;
             object-fit: cover;
+            border: solid;
         }
 
         div#app {
@@ -38,16 +48,17 @@
         <header>
             <h1>{{sitename}}</h1>
             <button v-on:click="showcheckout" v-if="enableshoppingcart">shopping cart</button>
-            <P v-else>shopping cart empty</P>
+            <P style="color: royalblue; font-weight: bold; font-size: 25px;"v-else>Shopping Cart</P>
             <div v-for="product in cart" style="display:inline-block;">
                 <figure>
                     <img v-bind:src="product.image" width="200" height="200">
                 </figure>
                 <h2 v-html="product.subject"></h2>
-                <P>Location: {{product.location}}</P>
-                <p>Price: {{product.price}}</p>
-                <P>Product I.d: {{product.id}}</P>
+               <span> <P>Locatioc:{{product.location}}</P>
+                <p>Price:{{product.price}}</p>
+                <P>ProductID: {{product.id}}</P>
                 <P>Number of spaces: {{product.availableInventory}}</P>
+            </span>
                 <button v-on:click="removefromcart(product)">removefromcart</button>
             </div>
         </header>
