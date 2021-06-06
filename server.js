@@ -34,7 +34,7 @@ app.param('collectionName', (req, res, next, collectionName) => {
 
 })
 
-app.use(express.static('Home'));
+
 app.get('/collection/:collectionName', (req, res, next) => {
 
     req.collection.find({}).toArray((e, results) => {
