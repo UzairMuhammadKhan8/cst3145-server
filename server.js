@@ -12,7 +12,7 @@ app.use((req, res, next) => {
 
 const MongoClient = require("mongodb").MongoClient
 
-let dp;
+let db;
 
 MongoClient.connect("mongodb+srv://uzair:saceblack123@@cluster0.lecbo.mongodb.net", (err, client) => {
 
