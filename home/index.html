@@ -129,8 +129,7 @@ button:active {
                     <P>Number of spaces: {{product.availableInventory}}</P>
                     <button v-on:click="decrement_inventory(product); addtocart(product); " v-if="isenable(product)">
                         ADD TO CART</button>
-                    <!-- only show the button when 'canAddToCart' is true when it becomes false the button disappers -->
-
+                
                     <button disabled="disabled" v-else>DISABLE</button>
                 </div>
             </div>
@@ -212,9 +211,7 @@ button:active {
                     this.cart.push(product);
                     console.log(product);
                     this.cartID.push(product.id)
-                    // console.log(product.availableInventory)
-                    // console.log(this.cartCount(product.id));
-
+                 
 
 
 
