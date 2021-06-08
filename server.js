@@ -28,7 +28,7 @@ app.get("/", (req, res, next) => {
 
 app.param('collectionName', (req, res, next, collectionName) => {
 
-    req.collection = db.colectionl(collectionName)
+    req.collection = db.collection(collectionName)
 
    
     return next()
